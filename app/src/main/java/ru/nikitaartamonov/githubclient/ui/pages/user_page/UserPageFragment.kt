@@ -17,7 +17,7 @@ class UserPageFragment : Fragment(R.layout.fragment_user_page) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        viewModel.onViewIsReady()
     }
 
     companion object {

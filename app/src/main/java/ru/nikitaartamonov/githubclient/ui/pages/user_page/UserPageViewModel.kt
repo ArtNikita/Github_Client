@@ -4,4 +4,7 @@ import androidx.lifecycle.ViewModel
 
 class UserPageViewModel : ViewModel(), UserPageContract.ViewModel {
 
+    override fun onViewIsReady() {
+        TODO("Not yet implemented")
+    }
 }
