@@ -14,19 +14,19 @@ data class UserEntity(
         @SerializedName("name")
         val name: String,
         @SerializedName("company")
-        val company: String,
+        val company: String?,
         @SerializedName("blog")
         val blog: String,
         @SerializedName("location")
-        val location: String,
+        val location: String?,
         @SerializedName("email")
-        val email: String,
+        val email: String?,
         @SerializedName("hireable")
-        val hireable: String,
+        val hireable: String?,
         @SerializedName("bio")
-        val bio: String,
+        val bio: String?,
         @SerializedName("twitter_username")
-        val twitter_username: String,
+        val twitter_username: String?,
         @SerializedName("public_repos")
         val public_repos: Int,
         @SerializedName("public_gists")

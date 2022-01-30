@@ -1,8 +1,9 @@
 package ru.nikitaartamonov.githubclient.ui.pages.user_page
 
 import android.app.Application
-import android.util.Log
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import ru.nikitaartamonov.githubclient.App
 import ru.nikitaartamonov.githubclient.domain.GithubLoader
 import ru.nikitaartamonov.githubclient.domain.entity.UserEntity
@@ -12,9 +13,14 @@ class UserPageViewModel(application: Application) : AndroidViewModel(application
 
     private var userEntity: UserEntity? = null
 
+    override val renderUserLiveData: LiveData<UserEntity> = MutableLiveData()
+
     override fun onViewIsReady(userName: String) {
-        if (userEntity == null) {
+        val userEntityCache = userEntity
+        if (userEntityCache == null) {
             loadUser(userName)
+        } else {
+            renderUserLiveData.postValue(userEntityCache)
         }
     }
 
@@ -26,9 +32,13 @@ class UserPageViewModel(application: Application) : AndroidViewModel(application
                 }
                 is GithubLoader.Result.Success -> {
                     userEntity = result.userEntity
-                    //todo process value
+                    renderUserLiveData.postValue(result.userEntity)
                 }
             }
         }
     }
+}
+
+private fun <T> LiveData<T>.postValue(data: T) {
+    (this as MutableLiveData).postValue(data)
 }
