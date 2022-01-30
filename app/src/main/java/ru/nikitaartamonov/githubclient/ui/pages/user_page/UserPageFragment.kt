@@ -7,6 +7,7 @@ import androidx.fragment.app.viewModels
 import by.kirich1409.viewbindingdelegate.viewBinding
 import ru.nikitaartamonov.githubclient.R
 import ru.nikitaartamonov.githubclient.databinding.FragmentUserPageBinding
+import java.lang.IllegalStateException
 
 private const val USER_NAME_KEY = "USER_NAME_KEY"
 
@@ -17,7 +18,8 @@ class UserPageFragment : Fragment(R.layout.fragment_user_page) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.onViewIsReady()
+        viewModel.onViewIsReady(requireArguments().getString(USER_NAME_KEY)
+            ?: throw IllegalStateException("User name should be provided"))
     }
 
     companion object {
