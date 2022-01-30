@@ -20,7 +20,3 @@ val Context.app
 
 val Fragment.app
     get() = requireActivity().app
-
-fun <T> ViewModel.post(liveData: LiveData<T>, data: T) {
-    (liveData as MutableLiveData).postValue(data)
-}

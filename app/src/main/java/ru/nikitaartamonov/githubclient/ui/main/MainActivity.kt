@@ -6,7 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.commit
 import ru.nikitaartamonov.githubclient.R
 import ru.nikitaartamonov.githubclient.databinding.ActivityMainBinding
-import ru.nikitaartamonov.githubclient.ui.pages.users_list_fragment.UsersListFragment
+import ru.nikitaartamonov.githubclient.ui.pages.users_list.UsersListFragment
 
 class MainActivity : AppCompatActivity() {
 

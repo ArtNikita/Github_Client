@@ -1,4 +1,4 @@
-package ru.nikitaartamonov.githubclient.ui.pages.users_list_fragment.recycler_view
+package ru.nikitaartamonov.githubclient.ui.pages.users_list.recycler_view
 
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView

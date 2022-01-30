@@ -1,16 +1,18 @@
-package ru.nikitaartamonov.githubclient.ui.pages.users_list_fragment
+package ru.nikitaartamonov.githubclient.ui.pages.users_list
 
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.commit
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import by.kirich1409.viewbindingdelegate.viewBinding
 import ru.nikitaartamonov.githubclient.R
 import ru.nikitaartamonov.githubclient.app
 import ru.nikitaartamonov.githubclient.databinding.FragmentUsersListBinding
-import ru.nikitaartamonov.githubclient.ui.pages.users_list_fragment.recycler_view.OnUserClickListener
-import ru.nikitaartamonov.githubclient.ui.pages.users_list_fragment.recycler_view.UsersListAdapter
+import ru.nikitaartamonov.githubclient.ui.pages.user_page.UserPageFragment
+import ru.nikitaartamonov.githubclient.ui.pages.users_list.recycler_view.OnUserClickListener
+import ru.nikitaartamonov.githubclient.ui.pages.users_list.recycler_view.UsersListAdapter
 
 class UsersListFragment : Fragment(R.layout.fragment_users_list) {
 
@@ -28,6 +30,18 @@ class UsersListFragment : Fragment(R.layout.fragment_users_list) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initRecyclerView()
+        initViewModel()
+    }
+
+    private fun initViewModel() {
+        viewModel.openUserPageLiveData.observe(viewLifecycleOwner) {event ->
+            event.getContentIfNotHandled()?.let {
+                requireActivity().supportFragmentManager.commit {
+                    addToBackStack(null)
+                    replace(R.id.main_fragment_container, UserPageFragment())
+                }
+            }
+        }
     }
 
     private fun initRecyclerView() {
