@@ -4,4 +4,7 @@ import androidx.lifecycle.ViewModel
 
 class UsersListViewModel : ViewModel(), UsersListContract.ViewModel {
 
+    override fun onUserClick(userName: String) {
+        //TODO("Not yet implemented")
+    }
 }

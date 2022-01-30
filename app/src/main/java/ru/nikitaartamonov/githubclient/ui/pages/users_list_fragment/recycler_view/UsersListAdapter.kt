@@ -3,12 +3,13 @@ package ru.nikitaartamonov.githubclient.ui.pages.users_list_fragment.recycler_vi
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 
-class UsersListAdapter : RecyclerView.Adapter<UserViewHolder>() {
+class UsersListAdapter(private val listener: OnUserClickListener) :
+    RecyclerView.Adapter<UserViewHolder>() {
 
     var usersList = listOf<String>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UserViewHolder {
-        return UserViewHolder(parent)
+        return UserViewHolder(parent, listener)
     }
 
     override fun onBindViewHolder(holder: UserViewHolder, position: Int) {

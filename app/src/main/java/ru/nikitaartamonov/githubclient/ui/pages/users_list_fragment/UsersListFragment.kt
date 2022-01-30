@@ -9,6 +9,7 @@ import by.kirich1409.viewbindingdelegate.viewBinding
 import ru.nikitaartamonov.githubclient.R
 import ru.nikitaartamonov.githubclient.app
 import ru.nikitaartamonov.githubclient.databinding.FragmentUsersListBinding
+import ru.nikitaartamonov.githubclient.ui.pages.users_list_fragment.recycler_view.OnUserClickListener
 import ru.nikitaartamonov.githubclient.ui.pages.users_list_fragment.recycler_view.UsersListAdapter
 
 class UsersListFragment : Fragment(R.layout.fragment_users_list) {
@@ -16,7 +17,13 @@ class UsersListFragment : Fragment(R.layout.fragment_users_list) {
     private val binding by viewBinding(FragmentUsersListBinding::bind)
     private val viewModel: UsersListContract.ViewModel by viewModels<UsersListViewModel>()
 
-    private val adapter = UsersListAdapter()
+    private val adapter = UsersListAdapter(
+        object : OnUserClickListener {
+            override fun onClick(userName: String) {
+                viewModel.onUserClick(userName)
+            }
+        }
+    )
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
