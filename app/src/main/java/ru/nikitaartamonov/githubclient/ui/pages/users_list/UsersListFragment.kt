@@ -34,11 +34,11 @@ class UsersListFragment : Fragment(R.layout.fragment_users_list) {
     }
 
     private fun initViewModel() {
-        viewModel.openUserPageLiveData.observe(viewLifecycleOwner) {event ->
-            event.getContentIfNotHandled()?.let {
+        viewModel.openUserPageLiveData.observe(viewLifecycleOwner) { event ->
+            event.getContentIfNotHandled()?.let { userName ->
                 requireActivity().supportFragmentManager.commit {
                     addToBackStack(null)
-                    replace(R.id.main_fragment_container, UserPageFragment())
+                    replace(R.id.main_fragment_container, UserPageFragment.newInstance(userName))
                 }
             }
         }
