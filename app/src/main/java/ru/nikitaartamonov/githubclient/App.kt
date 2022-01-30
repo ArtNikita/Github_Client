@@ -9,6 +9,10 @@ import androidx.lifecycle.ViewModel
 
 class App : Application() {
 
+    val usersList: List<String> by lazy {
+        listOf("ArtNikita", "kirich1409", "JakeWharton", "kshalnov")
+    }
+
 }
 
 val Context.app
