@@ -19,7 +19,7 @@ val Context.app
     get() = applicationContext as App
 
 val Fragment.app
-    get() = requireContext() as App
+    get() = requireActivity().app
 
 fun <T> ViewModel.post(liveData: LiveData<T>, data: T) {
     (liveData as MutableLiveData).postValue(data)
