@@ -14,25 +14,25 @@ data class RepoEntity(
     @SerializedName("fork")
     val isFork: Boolean,
     @SerializedName("created_at")
-    val created_at: String,
+    val createdAt: String,
     @SerializedName("updated_at")
-    val updated_at: String,
+    val updatedAt: String,
     @SerializedName("pushed_at")
-    val pushed_at: String,
+    val pushedAt: String,
     @SerializedName("homepage")
     val homepage: String?,
     @SerializedName("size")
     val size: Int,
     @SerializedName("watchers_count")
-    val watchers_count: Int,
+    val watchersCount: Int,
     @SerializedName("language")
     val language: String,
     @SerializedName("forks_count")
-    val forks_count: Int,
+    val forksCount: Int,
     @SerializedName("license")
     val license: String?,
     @SerializedName("allow_forking")
-    val allow_forking: Boolean,
+    val allowForking: Boolean,
     @SerializedName("visibility")
     val visibility: String,
     @SerializedName("forks")
@@ -40,5 +40,5 @@ data class RepoEntity(
     @SerializedName("watchers")
     val watchers: Int,
     @SerializedName("default_branch")
-    val default_branch: String,
+    val defaultBranch: String,
 )
