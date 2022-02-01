@@ -29,8 +29,6 @@ data class RepoEntity(
     val language: String,
     @SerializedName("forks_count")
     val forksCount: Int,
-    @SerializedName("license")
-    val license: String?,
     @SerializedName("allow_forking")
     val allowForking: Boolean,
     @SerializedName("visibility")
