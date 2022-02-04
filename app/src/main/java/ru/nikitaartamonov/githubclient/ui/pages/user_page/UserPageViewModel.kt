@@ -34,7 +34,7 @@ class UserPageViewModel(application: Application) : AndroidViewModel(application
     }
 
     private fun loadRepos(userName: String) {
-        getApplication<App>().githubLoader.loadRepos(userName) { result ->
+        getApplication<App>().githubLoader.loadRepos(userName).subscribe { result ->
             when (result) {
                 is GithubLoader.Result.Error -> {
                     //todo notify about error
@@ -48,7 +48,7 @@ class UserPageViewModel(application: Application) : AndroidViewModel(application
     }
 
     private fun loadUser(userName: String) {
-        getApplication<App>().githubLoader.loadUser(userName) { result ->
+        getApplication<App>().githubLoader.loadUser(userName).subscribe { result ->
             when (result) {
                 is GithubLoader.Result.Error -> {
                     //todo notify about error
