@@ -46,7 +46,7 @@ class UsersListFragment : Fragment(R.layout.fragment_users_list) {
 
     private fun initRecyclerView() {
         binding.usersListRecyclerView.layoutManager = LinearLayoutManager(requireContext())
-        adapter.usersList = app.usersList
+        adapter.usersList = app.usersList.getAllUserNames()
         binding.usersListRecyclerView.adapter = adapter
     }
 }
