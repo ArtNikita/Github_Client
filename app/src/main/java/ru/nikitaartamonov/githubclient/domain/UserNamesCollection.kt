@@ -1,10 +1,12 @@
 package ru.nikitaartamonov.githubclient.domain
 
+import io.reactivex.rxjava3.core.Single
+
 interface UserNamesCollection {
 
     fun addUser(userName: String)
     fun getUser(position: Int): String?
     fun removeUser(userName: String): Boolean
-    fun getAllUserNames(): List<String>
+    fun getAllUserNames(): Single<List<String>>
     val size: Int
 }

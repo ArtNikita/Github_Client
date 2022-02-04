@@ -1,5 +1,6 @@
 package ru.nikitaartamonov.githubclient.impl
 
+import io.reactivex.rxjava3.core.Single
 import ru.nikitaartamonov.githubclient.domain.UserNamesCollection
 
 class MockUserNamesCollection(private val userNamesList: MutableList<String> = mutableListOf()) :
@@ -18,8 +19,8 @@ class MockUserNamesCollection(private val userNamesList: MutableList<String> = m
         return userNamesList.remove(userName)
     }
 
-    override fun getAllUserNames(): List<String> {
-        return ArrayList(userNamesList)
+    override fun getAllUserNames(): Single<List<String>> {
+        return Single.just(ArrayList(userNamesList))
     }
 
     override val size: Int
