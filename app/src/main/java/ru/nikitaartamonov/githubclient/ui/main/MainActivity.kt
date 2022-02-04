@@ -3,7 +3,10 @@ package ru.nikitaartamonov.githubclient.ui.main
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.commit
+import ru.nikitaartamonov.githubclient.R
 import ru.nikitaartamonov.githubclient.databinding.ActivityMainBinding
+import ru.nikitaartamonov.githubclient.ui.pages.users_list.UsersListFragment
 
 class MainActivity : AppCompatActivity() {
 
@@ -13,5 +16,14 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
+        if (savedInstanceState == null) {
+            initStartScreen()
+        }
+    }
+
+    private fun initStartScreen() {
+        supportFragmentManager.commit {
+            add(R.id.main_fragment_container, UsersListFragment())
+        }
     }
 }
