@@ -4,6 +4,8 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.schedulers.Schedulers
 import ru.nikitaartamonov.githubclient.App
 import ru.nikitaartamonov.githubclient.domain.GithubLoader
 import ru.nikitaartamonov.githubclient.domain.entity.RepoEntity
@@ -34,31 +36,37 @@ class UserPageViewModel(application: Application) : AndroidViewModel(application
     }
 
     private fun loadRepos(userName: String) {
-        getApplication<App>().githubLoader.loadRepos(userName).subscribe { result ->
-            when (result) {
-                is GithubLoader.Result.Error -> {
-                    //todo notify about error
-                }
-                is GithubLoader.Result.Success<*> -> {
-                    userRepos = result.body as List<RepoEntity>
-                    renderReposLiveData.postValue(result.body)
+        getApplication<App>().githubLoader.loadRepos(userName)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe { result ->
+                when (result) {
+                    is GithubLoader.Result.Error -> {
+                        //todo notify about error
+                    }
+                    is GithubLoader.Result.Success<*> -> {
+                        userRepos = result.body as List<RepoEntity>
+                        renderReposLiveData.postValue(result.body)
+                    }
                 }
             }
-        }
     }
 
     private fun loadUser(userName: String) {
-        getApplication<App>().githubLoader.loadUser(userName).subscribe { result ->
-            when (result) {
-                is GithubLoader.Result.Error -> {
-                    //todo notify about error
-                }
-                is GithubLoader.Result.Success<*> -> {
-                    userEntity = result.body as UserEntity
-                    renderUserLiveData.postValue(result.body)
+        getApplication<App>().githubLoader.loadUser(userName)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe { result ->
+                when (result) {
+                    is GithubLoader.Result.Error -> {
+                        //todo notify about error
+                    }
+                    is GithubLoader.Result.Success<*> -> {
+                        userEntity = result.body as UserEntity
+                        renderUserLiveData.postValue(result.body)
+                    }
                 }
             }
-        }
     }
 }
 
