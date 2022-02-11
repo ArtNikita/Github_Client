@@ -1,9 +1,11 @@
 package ru.nikitaartamonov.githubclient.domain
 
+import io.reactivex.rxjava3.core.Single
+
 interface GithubLoader {
 
-    fun loadUser(userName: String, callback: (Result) -> Unit)
-    fun loadRepos(userName: String, callback: (Result) -> Unit)
+    fun loadUser(userName: String): Single<Result>
+    fun loadRepos(userName: String): Single<Result>
 
     sealed class Result {
         data class Error(val error: Throwable) : Result()

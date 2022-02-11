@@ -7,6 +7,8 @@ import androidx.fragment.app.commit
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import by.kirich1409.viewbindingdelegate.viewBinding
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.kotlin.subscribeBy
 import ru.nikitaartamonov.githubclient.R
 import ru.nikitaartamonov.githubclient.app
 import ru.nikitaartamonov.githubclient.databinding.FragmentUsersListBinding
@@ -46,7 +48,9 @@ class UsersListFragment : Fragment(R.layout.fragment_users_list) {
 
     private fun initRecyclerView() {
         binding.usersListRecyclerView.layoutManager = LinearLayoutManager(requireContext())
-        adapter.usersList = app.usersList
+        app.usersList.getAllUserNames()
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeBy { adapter.usersList = it }
         binding.usersListRecyclerView.adapter = adapter
     }
 }

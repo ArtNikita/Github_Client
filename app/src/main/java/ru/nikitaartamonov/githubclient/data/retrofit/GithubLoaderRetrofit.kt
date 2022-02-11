@@ -1,13 +1,11 @@
 package ru.nikitaartamonov.githubclient.data.retrofit
 
-import retrofit2.Call
-import retrofit2.Callback
+import io.reactivex.rxjava3.core.Single
+import io.reactivex.rxjava3.core.SingleEmitter
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import ru.nikitaartamonov.githubclient.domain.GithubLoader
-import ru.nikitaartamonov.githubclient.domain.entity.RepoEntity
-import ru.nikitaartamonov.githubclient.domain.entity.UserEntity
 
 class GithubLoaderRetrofit : GithubLoader {
 
@@ -18,42 +16,38 @@ class GithubLoaderRetrofit : GithubLoader {
 
     private val githubApi = retrofit.create(GithubApi::class.java)
 
-    override fun loadUser(userName: String, callback: (GithubLoader.Result) -> Unit) {
-        githubApi.getUser(userName).enqueue(object : Callback<UserEntity> {
-            override fun onResponse(call: Call<UserEntity>, response: Response<UserEntity>) {
-                if (response.isSuccessful) {
-                    response.body()?.let {
-                        callback(GithubLoader.Result.Success(it))
-                    } ?: callback(GithubLoader.Result.Error(Throwable("Empty response")))
-                } else {
-                    callback(GithubLoader.Result.Error(Throwable("Server problem")))
-                }
+    override fun loadUser(userName: String): Single<GithubLoader.Result> {
+        return Single.create { emitter ->
+            try {
+                val response = githubApi.getUser(userName).execute()
+                processResponse(emitter, response)
+            } catch (e: Exception) {
+                emitter.onSuccess(GithubLoader.Result.Error(e))
             }
-
-            override fun onFailure(call: Call<UserEntity>, error: Throwable) {
-                callback(GithubLoader.Result.Error(error))
-            }
-        })
+        }
     }
 
-    override fun loadRepos(userName: String, callback: (GithubLoader.Result) -> Unit) {
-        githubApi.getRepos(userName).enqueue(object : Callback<List<RepoEntity>> {
-            override fun onResponse(
-                call: Call<List<RepoEntity>>, response: Response<List<RepoEntity>>
-            ) {
-                if (response.isSuccessful) {
-                    response.body()?.let {
-                        callback(GithubLoader.Result.Success(it))
-                    } ?: callback(GithubLoader.Result.Error(Throwable("Empty response")))
-                } else {
-                    callback(GithubLoader.Result.Error(Throwable("Server problem")))
-                }
+    override fun loadRepos(userName: String): Single<GithubLoader.Result> {
+        return Single.create { emitter ->
+            try {
+                val response = githubApi.getRepos(userName).execute()
+                processResponse(emitter, response)
+            } catch (e: Exception) {
+                emitter.onSuccess(GithubLoader.Result.Error(e))
             }
+        }
 
-            override fun onFailure(call: Call<List<RepoEntity>>, error: Throwable) {
-                callback(GithubLoader.Result.Error(error))
-            }
+    }
 
-        })
+    private fun <T> processResponse(
+        emitter: SingleEmitter<GithubLoader.Result>, response: Response<T>
+    ) {
+        if (response.isSuccessful) {
+            response.body()?.let {
+                emitter.onSuccess(GithubLoader.Result.Success(it))
+            } ?: emitter.onSuccess(GithubLoader.Result.Error(Throwable("Empty response")))
+        } else {
+            emitter.onSuccess(GithubLoader.Result.Error(Throwable("Server problem")))
+        }
     }
 }
