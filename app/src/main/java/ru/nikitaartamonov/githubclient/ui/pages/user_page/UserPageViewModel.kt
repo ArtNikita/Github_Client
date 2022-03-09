@@ -5,6 +5,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.kotlin.subscribeBy
 import io.reactivex.rxjava3.schedulers.Schedulers
 import ru.nikitaartamonov.githubclient.App
 import ru.nikitaartamonov.githubclient.domain.GithubLoader
@@ -36,7 +37,7 @@ class UserPageViewModel(application: Application) : AndroidViewModel(application
     }
 
     private fun loadRepos(userName: String) {
-        getApplication<App>().githubLoader.loadRepos(userName)
+        /*getApplication<App>().githubLoader.loadRepos(userName)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe { result ->
@@ -49,11 +50,22 @@ class UserPageViewModel(application: Application) : AndroidViewModel(application
                         renderReposLiveData.postValue(result.body)
                     }
                 }
-            }
+            }*/
+        getApplication<App>().githubLoader.loadReposRx(userName)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeBy(
+                onSuccess = {
+                    renderReposLiveData.postValue(it)
+                },
+                onError = {
+                    //todo notify about error
+                }
+            )
     }
 
     private fun loadUser(userName: String) {
-        getApplication<App>().githubLoader.loadUser(userName)
+/*        getApplication<App>().githubLoader.loadUser(userName)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe { result ->
@@ -66,7 +78,18 @@ class UserPageViewModel(application: Application) : AndroidViewModel(application
                         renderUserLiveData.postValue(result.body)
                     }
                 }
-            }
+            }*/
+        getApplication<App>().githubLoader.loadUserRx(userName)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeBy(
+                onSuccess = {
+                    renderUserLiveData.postValue(it)
+                },
+                onError = {
+                    //todo notify about error
+                }
+            )
     }
 }
 
