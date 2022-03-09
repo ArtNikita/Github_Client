@@ -50,7 +50,9 @@ class UsersListFragment : Fragment(R.layout.fragment_users_list) {
         binding.usersListRecyclerView.layoutManager = LinearLayoutManager(requireContext())
         app.usersList.getAllUserNames()
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribeBy { adapter.usersList = it }
-        binding.usersListRecyclerView.adapter = adapter
+            .subscribeBy {
+                adapter.usersList = it
+                binding.usersListRecyclerView.adapter = adapter
+            }
     }
 }
