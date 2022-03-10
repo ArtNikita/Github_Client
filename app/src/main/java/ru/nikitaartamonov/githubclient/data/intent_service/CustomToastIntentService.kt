@@ -1,25 +1,45 @@
 package ru.nikitaartamonov.githubclient.data.intent_service
 
-import android.app.IntentService
+import android.app.Service
 import android.content.Context
 import android.content.Intent
 import android.os.Handler
+import android.os.HandlerThread
+import android.os.IBinder
 import android.os.Looper
 import android.widget.Toast
 
 private const val MESSAGE_KEY = "MESSAGE_KEY"
 private const val DELAY_KEY = "DELAY_KEY"
 
-class ReferenceToastIntentService : IntentService("ReferenceToastIntentService") {
+class CustomToastIntentService : Service() {
 
     private var counter = 0
 
-    override fun onHandleIntent(intent: Intent?) {
+    private val handlerThread: HandlerThread = HandlerThread("Handler thread")
+
+    override fun onCreate() {
+        super.onCreate()
+        handlerThread.start()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        handlerThread.quit()
+    }
+
+    override fun onBind(intent: Intent?): IBinder? = null
+
+    override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         intent?.let {
             val msg = it.getStringExtra(MESSAGE_KEY) ?: ""
             val delay = it.getLongExtra(DELAY_KEY, 0)
-            showDelayedToast(msg, delay)
+            Handler(handlerThread.looper).post {
+                showDelayedToast(msg, delay)
+                stopSelf(startId)
+            }
         }
+        return START_REDELIVER_INTENT
     }
 
     private fun showDelayedToast(msg: String, delay: Long) {
@@ -34,7 +54,7 @@ class ReferenceToastIntentService : IntentService("ReferenceToastIntentService")
     companion object {
 
         fun showToast(context: Context, msg: String, delay: Long) {
-            val intent = Intent(context, ReferenceToastIntentService::class.java)
+            val intent = Intent(context, CustomToastIntentService::class.java)
             intent.putExtra(MESSAGE_KEY, msg)
             intent.putExtra(DELAY_KEY, delay)
             context.startService(intent)

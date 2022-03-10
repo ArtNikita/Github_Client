@@ -5,7 +5,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.commit
 import ru.nikitaartamonov.githubclient.R
-import ru.nikitaartamonov.githubclient.data.intent_service.ReferenceToastIntentService
+import ru.nikitaartamonov.githubclient.data.intent_service.CustomToastIntentService
 import ru.nikitaartamonov.githubclient.databinding.ActivityMainBinding
 import ru.nikitaartamonov.githubclient.ui.pages.users_list.UsersListFragment
 import java.util.*
@@ -32,7 +32,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun initToastButton() {
         binding.toastButton.setOnClickListener {
-            ReferenceToastIntentService.showToast(
+            CustomToastIntentService.showToast(
                 this,
                 UUID.randomUUID().toString(),
                 3_000L
