@@ -12,13 +12,33 @@
         android:layout_height="match_parent" />
 
     <Button
-        android:id="@+id/toast_button"
+        android:id="@+id/high_priority_toast_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/normal_space"
-        android:text="@string/toast"
+        android:text="@string/high_priority_toast"
         android:textAllCaps="false"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toStartOf="@id/default_priority_toast_button"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/default_priority_toast_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/default_priority_toast"
+        android:textAllCaps="false"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/low_priority_toast_button"
+        app:layout_constraintStart_toEndOf="@id/high_priority_toast_button" />
+
+    <Button
+        android:id="@+id/low_priority_toast_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/low_priority_toast"
+        android:textAllCaps="false"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/default_priority_toast_button" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

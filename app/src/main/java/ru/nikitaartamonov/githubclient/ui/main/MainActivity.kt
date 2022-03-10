@@ -18,7 +18,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
-        initToastButton()
+        initToastButtons()
         if (savedInstanceState == null) {
             initStartScreen()
         }
@@ -30,12 +30,29 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun initToastButton() {
-        binding.toastButton.setOnClickListener {
+    private fun initToastButtons() {
+        binding.highPriorityToastButton.setOnClickListener {
             CustomToastIntentService.showToast(
                 this,
                 UUID.randomUUID().toString(),
-                3_000L
+                3_000L,
+                5
+            )
+        }
+        binding.defaultPriorityToastButton.setOnClickListener {
+            CustomToastIntentService.showToast(
+                this,
+                UUID.randomUUID().toString(),
+                3_000L,
+                0
+            )
+        }
+        binding.lowPriorityToastButton.setOnClickListener {
+            CustomToastIntentService.showToast(
+                this,
+                UUID.randomUUID().toString(),
+                3_000L,
+                -5
             )
         }
     }

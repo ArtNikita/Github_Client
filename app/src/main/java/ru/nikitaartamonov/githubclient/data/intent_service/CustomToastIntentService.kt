@@ -10,6 +10,7 @@ import android.widget.Toast
 
 private const val MESSAGE_KEY = "MESSAGE_KEY"
 private const val DELAY_KEY = "DELAY_KEY"
+private const val PRIORITY_KEY = "PRIORITY_KEY"
 
 class CustomToastIntentService : Service() {
 
@@ -33,17 +34,18 @@ class CustomToastIntentService : Service() {
         intent?.let {
             val msg = it.getStringExtra(MESSAGE_KEY) ?: ""
             val delay = it.getLongExtra(DELAY_KEY, 0)
-            handlerThread.post {
-                showDelayedToast(msg, delay)
+            val priority = it.getIntExtra(PRIORITY_KEY, 0)
+            handlerThread.post(priority) {
+                showDelayedToast(msg, delay, priority)
             }
         }
         return START_REDELIVER_INTENT
     }
 
-    private fun showDelayedToast(msg: String, delay: Long) {
+    private fun showDelayedToast(msg: String, delay: Long, priority: Int) {
         val mainHandler = Handler(Looper.getMainLooper())
         Thread.sleep(delay)
-        val countedMsg = "${counter++}. $msg"
+        val countedMsg = "${counter++}. $priority. $msg"
         mainHandler.post {
             Toast.makeText(this, countedMsg, Toast.LENGTH_SHORT).show()
         }
@@ -51,10 +53,11 @@ class CustomToastIntentService : Service() {
 
     companion object {
 
-        fun showToast(context: Context, msg: String, delay: Long) {
+        fun showToast(context: Context, msg: String, delay: Long, priority: Int) {
             val intent = Intent(context, CustomToastIntentService::class.java)
             intent.putExtra(MESSAGE_KEY, msg)
             intent.putExtra(DELAY_KEY, delay)
+            intent.putExtra(PRIORITY_KEY, priority)
             context.startService(intent)
         }
     }
