@@ -2,22 +2,25 @@ package ru.nikitaartamonov.githubclient.data.intent_service
 
 import androidx.annotation.WorkerThread
 import java.util.*
+import java.util.concurrent.locks.ReentrantLock
+import kotlin.concurrent.withLock
 
 class CustomHandlerThread(name: String) : Thread(name) {
 
     private val queue: Queue<Runnable> = LinkedList()
     private var isRunning = false
-    private val lock: Object = Object()
+    private val lock = ReentrantLock()
+    private val condition = lock.newCondition()
 
     @WorkerThread
     override fun run() {
         isRunning = true
         while (isRunning) {
             val runnable: Runnable?
-            synchronized(lock) {
+            lock.withLock {
                 runnable = queue.poll()
                 if (runnable == null) {
-                    lock.wait()
+                    condition.await()
                 }
             }
             runnable?.run()
@@ -25,16 +28,16 @@ class CustomHandlerThread(name: String) : Thread(name) {
     }
 
     fun quit() {
-        synchronized(lock) {
+        lock.withLock {
             isRunning = false
-            lock.notify()
+            condition.signal()
         }
     }
 
     fun post(runnable: Runnable) {
-        synchronized(lock) {
+        lock.withLock {
             queue.add(runnable)
-            lock.notify()
+            condition.signal()
         }
     }
 }
