@@ -35,7 +35,6 @@ class CustomToastIntentService : Service() {
             val delay = it.getLongExtra(DELAY_KEY, 0)
             handlerThread.post {
                 showDelayedToast(msg, delay)
-                stopSelf(startId)
             }
         }
         return START_REDELIVER_INTENT
