@@ -4,7 +4,6 @@ import android.app.Service
 import android.content.Context
 import android.content.Intent
 import android.os.Handler
-import android.os.HandlerThread
 import android.os.IBinder
 import android.os.Looper
 import android.widget.Toast
@@ -16,7 +15,7 @@ class CustomToastIntentService : Service() {
 
     private var counter = 0
 
-    private val handlerThread: HandlerThread = HandlerThread("Handler thread")
+    private val handlerThread: CustomHandlerThread = CustomHandlerThread("Handler thread")
 
     override fun onCreate() {
         super.onCreate()
@@ -34,7 +33,7 @@ class CustomToastIntentService : Service() {
         intent?.let {
             val msg = it.getStringExtra(MESSAGE_KEY) ?: ""
             val delay = it.getLongExtra(DELAY_KEY, 0)
-            Handler(handlerThread.looper).post {
+            handlerThread.post {
                 showDelayedToast(msg, delay)
                 stopSelf(startId)
             }
