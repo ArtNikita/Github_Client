@@ -4,9 +4,8 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import ru.nikitaartamonov.githubclient.domain.entity.RepoEntity
 
-class ReposListAdapter : RecyclerView.Adapter<RepoViewHolder>() {
-
-    var reposList = listOf<RepoEntity>()
+class ReposListAdapter(var reposList: List<RepoEntity> = listOf()) :
+    RecyclerView.Adapter<RepoViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RepoViewHolder {
         return RepoViewHolder(parent)
