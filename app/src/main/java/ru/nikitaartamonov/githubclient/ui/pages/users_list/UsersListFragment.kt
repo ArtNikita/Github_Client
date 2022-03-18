@@ -9,9 +9,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import by.kirich1409.viewbindingdelegate.viewBinding
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.kotlin.subscribeBy
+import org.koin.android.ext.android.get
 import ru.nikitaartamonov.githubclient.R
-import ru.nikitaartamonov.githubclient.app
 import ru.nikitaartamonov.githubclient.databinding.FragmentUsersListBinding
+import ru.nikitaartamonov.githubclient.domain.UserNamesRepo
 import ru.nikitaartamonov.githubclient.ui.pages.user_page.UserPageFragment
 import ru.nikitaartamonov.githubclient.ui.pages.users_list.recycler_view.OnUserClickListener
 import ru.nikitaartamonov.githubclient.ui.pages.users_list.recycler_view.UsersListAdapter
@@ -48,7 +49,7 @@ class UsersListFragment : Fragment(R.layout.fragment_users_list) {
 
     private fun initRecyclerView() {
         binding.usersListRecyclerView.layoutManager = LinearLayoutManager(requireContext())
-        app.appComponent.getUsersList().getAllUserNames()
+        get<UserNamesRepo>().getAllUserNames()
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeBy {
                 adapter.usersList = it

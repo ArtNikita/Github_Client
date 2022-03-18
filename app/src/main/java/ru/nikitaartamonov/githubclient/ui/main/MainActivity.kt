@@ -4,12 +4,13 @@ import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.commit
+import org.koin.android.ext.android.get
+import org.koin.core.qualifier.named
 import ru.nikitaartamonov.githubclient.R
-import ru.nikitaartamonov.githubclient.app
 import ru.nikitaartamonov.githubclient.data.intent_service.CustomToastIntentService
 import ru.nikitaartamonov.githubclient.databinding.ActivityMainBinding
+import ru.nikitaartamonov.githubclient.di.UUID_QUALIFIER
 import ru.nikitaartamonov.githubclient.ui.pages.users_list.UsersListFragment
-import java.util.*
 
 private const val TOAST_DELAY: Long = 3_000L
 
@@ -37,7 +38,7 @@ class MainActivity : AppCompatActivity() {
         binding.highPriorityToastButton.setOnClickListener {
             CustomToastIntentService.showToast(
                 this,
-                app.appComponent.getUuid(),
+                get(named(UUID_QUALIFIER)),
                 TOAST_DELAY,
                 5
             )
@@ -45,7 +46,7 @@ class MainActivity : AppCompatActivity() {
         binding.defaultPriorityToastButton.setOnClickListener {
             CustomToastIntentService.showToast(
                 this,
-                app.appComponent.getUuid(),
+                get(named(UUID_QUALIFIER)),
                 TOAST_DELAY,
                 0
             )
@@ -53,7 +54,7 @@ class MainActivity : AppCompatActivity() {
         binding.lowPriorityToastButton.setOnClickListener {
             CustomToastIntentService.showToast(
                 this,
-                app.appComponent.getUuid(),
+                get(named(UUID_QUALIFIER)),
                 TOAST_DELAY,
                 -5
             )
