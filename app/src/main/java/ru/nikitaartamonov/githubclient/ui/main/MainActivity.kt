@@ -37,7 +37,7 @@ class MainActivity : AppCompatActivity() {
         binding.highPriorityToastButton.setOnClickListener {
             CustomToastIntentService.showToast(
                 this,
-                app.uuid,
+                app.appComponent.getUuid(),
                 TOAST_DELAY,
                 5
             )
@@ -45,7 +45,7 @@ class MainActivity : AppCompatActivity() {
         binding.defaultPriorityToastButton.setOnClickListener {
             CustomToastIntentService.showToast(
                 this,
-                app.uuid,
+                app.appComponent.getUuid(),
                 TOAST_DELAY,
                 0
             )
@@ -53,7 +53,7 @@ class MainActivity : AppCompatActivity() {
         binding.lowPriorityToastButton.setOnClickListener {
             CustomToastIntentService.showToast(
                 this,
-                app.uuid,
+                app.appComponent.getUuid(),
                 TOAST_DELAY,
                 -5
             )
