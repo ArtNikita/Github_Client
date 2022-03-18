@@ -40,33 +40,13 @@ class UserPageFragment : Fragment(R.layout.fragment_user_page) {
             binding.userLoginTextView.text = userEntity.login
             binding.userNameTextView.text = userEntity.name
             binding.userIdTextView.text = userEntity.id.toString()
-            binding.otherInfoTextView.text = generateOtherUserInfo(userEntity)
+            binding.otherInfoTextView.text = UserEntity.generateOtherUserInfo(userEntity)
         }
         viewModel.renderReposLiveData.observe(viewLifecycleOwner) { reposList ->
             adapter.reposList = reposList
             binding.repositoriesRecyclerView.layoutManager = LinearLayoutManager(requireContext())
             binding.repositoriesRecyclerView.adapter = adapter
         }
-    }
-
-    private fun generateOtherUserInfo(userEntity: UserEntity): String {
-        val sb = StringBuilder("|")
-        userEntity.apply {
-            if (company != null) sb.append(company).append("|")
-            if (blog != "") sb.append(blog).append("|")
-            if (location != null) sb.append(location).append("|")
-            if (email != null) sb.append(email).append("|")
-            if (hireable != null) sb.append(hireable).append("|")
-            if (bio != null) sb.append(bio).append("|")
-            if (twitter_username != null) sb.append(twitter_username).append("|")
-            sb.append(public_repos).append("|")
-            sb.append(public_gists).append("|")
-            sb.append(followers).append("|")
-            sb.append(following).append("|")
-            sb.append(created_at).append("|")
-            sb.append(updated_at).append("|")
-        }
-        return sb.toString()
     }
 
     companion object {

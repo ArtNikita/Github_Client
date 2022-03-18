@@ -3,17 +3,15 @@ package ru.nikitaartamonov.githubclient
 import android.app.Application
 import android.content.Context
 import androidx.fragment.app.Fragment
-import ru.nikitaartamonov.githubclient.data.retrofit.GithubLoaderRetrofit
-import ru.nikitaartamonov.githubclient.domain.UserNamesCollection
-import ru.nikitaartamonov.githubclient.impl.MockUserNamesCollection
+import androidx.lifecycle.AndroidViewModel
+import ru.nikitaartamonov.githubclient.di.AppComponent
+import ru.nikitaartamonov.githubclient.di.DaggerAppComponent
 
 class App : Application() {
 
-    val usersList: UserNamesCollection by lazy {
-        MockUserNamesCollection(mutableListOf("ArtNikita", "kirich1409", "JakeWharton", "kshalnov"))
+    val appComponent: AppComponent by lazy {
+        DaggerAppComponent.builder().build()
     }
-
-    val githubLoader by lazy { GithubLoaderRetrofit() }
 
 }
 
@@ -22,3 +20,6 @@ val Context.app
 
 val Fragment.app
     get() = requireActivity().app
+
+val AndroidViewModel.app
+    get() = getApplication<App>()
