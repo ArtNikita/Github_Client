@@ -1,10 +1,10 @@
-package ru.nikitaartamonov.githubclient.impl
+package ru.nikitaartamonov.githubclient.data
 
 import io.reactivex.rxjava3.core.Single
-import ru.nikitaartamonov.githubclient.domain.UserNamesCollection
+import ru.nikitaartamonov.githubclient.domain.UserNamesRepo
 
-class MockUserNamesCollection(private val userNamesList: MutableList<String> = mutableListOf()) :
-    UserNamesCollection {
+class MockUserNamesRepo(private val userNamesList: MutableList<String> = mutableListOf()) :
+    UserNamesRepo {
 
     override fun addUser(userName: String) {
         userNamesList += userName

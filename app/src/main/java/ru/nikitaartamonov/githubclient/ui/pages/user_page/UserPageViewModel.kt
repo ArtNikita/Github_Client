@@ -7,7 +7,9 @@ import androidx.lifecycle.MutableLiveData
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.kotlin.subscribeBy
 import io.reactivex.rxjava3.schedulers.Schedulers
+import org.koin.android.ext.android.get
 import ru.nikitaartamonov.githubclient.app
+import ru.nikitaartamonov.githubclient.domain.GithubLoaderUsecase
 import ru.nikitaartamonov.githubclient.domain.entity.RepoEntity
 import ru.nikitaartamonov.githubclient.domain.entity.UserEntity
 
@@ -50,7 +52,7 @@ class UserPageViewModel(application: Application) : AndroidViewModel(application
                     }
                 }
             }*/
-        app.appComponent.getGithubLoader().loadReposRx(userName)
+        app.get<GithubLoaderUsecase>().loadReposRx(userName)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeBy(
@@ -78,7 +80,7 @@ class UserPageViewModel(application: Application) : AndroidViewModel(application
                     }
                 }
             }*/
-        app.appComponent.getGithubLoader().loadUserRx(userName)
+        app.get<GithubLoaderUsecase>().loadUserRx(userName)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeBy(

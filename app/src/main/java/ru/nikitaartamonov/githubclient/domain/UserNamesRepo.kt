@@ -2,7 +2,7 @@ package ru.nikitaartamonov.githubclient.domain
 
 import io.reactivex.rxjava3.core.Single
 
-interface UserNamesCollection {
+interface UserNamesRepo {
 
     fun addUser(userName: String)
     fun getUser(position: Int): String?

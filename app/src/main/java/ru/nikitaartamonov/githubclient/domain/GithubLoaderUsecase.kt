@@ -4,7 +4,7 @@ import io.reactivex.rxjava3.core.Single
 import ru.nikitaartamonov.githubclient.domain.entity.RepoEntity
 import ru.nikitaartamonov.githubclient.domain.entity.UserEntity
 
-interface GithubLoader {
+interface GithubLoaderUsecase {
 
     fun loadUser(userName: String): Single<Result>
     fun loadRepos(userName: String): Single<Result>
