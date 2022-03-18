@@ -3,7 +3,7 @@ package ru.nikitaartamonov.githubclient.di
 import dagger.Module
 import dagger.Provides
 import ru.nikitaartamonov.githubclient.domain.UserNamesCollection
-import ru.nikitaartamonov.githubclient.impl.MockUserNamesCollection
+import ru.nikitaartamonov.githubclient.data.MockUserNamesCollection
 import javax.inject.Singleton
 
 @Module

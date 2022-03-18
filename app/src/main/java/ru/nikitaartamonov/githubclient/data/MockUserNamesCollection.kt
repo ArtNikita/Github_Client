@@ -1,4 +1,4 @@
-package ru.nikitaartamonov.githubclient.impl
+package ru.nikitaartamonov.githubclient.data
 
 import io.reactivex.rxjava3.core.Single
 import ru.nikitaartamonov.githubclient.domain.UserNamesCollection
