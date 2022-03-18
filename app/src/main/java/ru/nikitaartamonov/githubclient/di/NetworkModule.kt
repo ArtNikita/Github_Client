@@ -7,7 +7,7 @@ import retrofit2.adapter.rxjava3.RxJava3CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import ru.nikitaartamonov.githubclient.data.retrofit.GithubApi
 import ru.nikitaartamonov.githubclient.data.retrofit.GithubLoaderRetrofit
-import ru.nikitaartamonov.githubclient.domain.GithubLoader
+import ru.nikitaartamonov.githubclient.domain.GithubLoaderUsecase
 import javax.inject.Named
 import javax.inject.Singleton
 
@@ -34,5 +34,5 @@ class NetworkModule {
 
     @Singleton
     @Provides
-    fun provideGithubLoader(githubApi: GithubApi): GithubLoader = GithubLoaderRetrofit(githubApi)
+    fun provideGithubLoader(githubApi: GithubApi): GithubLoaderUsecase = GithubLoaderRetrofit(githubApi)
 }
