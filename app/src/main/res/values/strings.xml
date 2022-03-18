@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">Github Client</string>
     <string name="avatar">Avatar</string>
+    <string name="high_priority_toast">High priority\ntoast</string>
+    <string name="default_priority_toast">Default priority\ntoast</string>
+    <string name="low_priority_toast">Low priority\ntoast</string>
 </resources>

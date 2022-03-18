@@ -3,22 +3,11 @@ package ru.nikitaartamonov.githubclient.data.retrofit
 import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.core.SingleEmitter
 import retrofit2.Response
-import retrofit2.Retrofit
-import retrofit2.adapter.rxjava3.RxJava3CallAdapterFactory
-import retrofit2.converter.gson.GsonConverterFactory
 import ru.nikitaartamonov.githubclient.domain.GithubLoader
 import ru.nikitaartamonov.githubclient.domain.entity.RepoEntity
 import ru.nikitaartamonov.githubclient.domain.entity.UserEntity
 
-class GithubLoaderRetrofit : GithubLoader {
-
-    private val retrofit = Retrofit.Builder()
-        .baseUrl("https://api.github.com/")
-        .addConverterFactory(GsonConverterFactory.create())
-        .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
-        .build()
-
-    private val githubApi = retrofit.create(GithubApi::class.java)
+class GithubLoaderRetrofit(private val githubApi: GithubApi) : GithubLoader {
 
     override fun loadUser(userName: String): Single<GithubLoader.Result> {
         return Single.create { emitter ->
